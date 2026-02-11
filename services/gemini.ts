@@ -1,8 +1,10 @@
 
+"use server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { StartupPlan, SurveyData, ReadinessQuestion, ReadinessResult } from "../types";
+const apiKeyyy = import.meta.env.VITE_GEMINI_API_KEY as string;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: apiKeyyy });
 
 const STARTUP_PLAN_SCHEMA = {
   type: Type.OBJECT,
@@ -67,7 +69,7 @@ const STARTUP_PLAN_SCHEMA = {
 
 export async function generateStartupPlan(idea: string): Promise<StartupPlan> {
   const response = await ai.models.generateContent({
-    model: "gemini-3-pro-preview",
+    model: "gemini-3-flash-preview",
     contents: `Analyze this startup idea for an Indian university student: "${idea}". 
     Create a detailed execution plan focused on speed and campus-level MVP.`,
     config: {
